@@ -30,20 +30,22 @@ import numpy as np
 
 class EulerExplicito(object):
 
-    def solucionar(self, funcoes,pvi,indice, h, tmax):
+    def solucionar(self, funcoes,pvi, h, tmax):
         self.tmax = tmax
         self.h = h
         self.resultados = []
-        t = pvi[indice]
-        for edo in funcoes:
-            self.resultados.append([edo.getValorFuncao(pvi)])
-        self.resultados.append([t])
+        t = pvi[-1]
+        for valor in pvi:
+            self.resultados.append([valor])
         while t <= tmax:
             for i, func in enumerate(funcoes):
                 r = self.resultados[i]
                 r.append(r[-1] + self.h * func.getValorFuncao(np.array(self.resultados)[:, -1]))
                 t = self.h + t
                 self.resultados[-1].append(t)
+
+    def eixoX(self):
+        return self.resultados[-1]
 
 class Newton(object):
 
