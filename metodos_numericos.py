@@ -38,11 +38,12 @@ class EulerExplicito(object):
         for valor in pvi:
             self.resultados.append([valor])
         while t <= tmax:
+            resultados = np.array(self.resultados)[:, -1]
             for i, func in enumerate(funcoes):
                 r = self.resultados[i]
-                r.append(r[-1] + self.h * func.getValorFuncao(np.array(self.resultados)[:, -1]))
+                r.append(r[-1] + self.h * func.getValorFuncao(resultados))
                 t = self.h + t
-                self.resultados[-1].append(t)
+            self.resultados[-1].append(t)
 
     def eixoX(self):
         return self.resultados[-1]
