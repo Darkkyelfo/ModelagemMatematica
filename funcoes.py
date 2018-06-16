@@ -42,12 +42,9 @@ from numpy import e
 
 class FuncaoModelo(object):
 
-    def __init__(self, funcao, pvis=None,derivada="0"):
-        if pvis is None:
-            pvis = {"x": 0}
-        pvis["e"] = e
+    def __init__(self, funcao,variaveis, derivada="0"):
         self.funcao = funcao
-        self.pvis = pvis
+        self.variaveis = variaveis
         self.derivada = derivada
 
     def getValorFuncao(self, valores):
@@ -58,7 +55,6 @@ class FuncaoModelo(object):
 
     def __setChaves(self, valores):
         chaves = {"e": e}  # numero de Euler
-        keys = list(self.pvis.keys())
-        for i, key in enumerate(keys[:len(valores)]):
+        for i, key in enumerate(self.variaveis):
             chaves.update({key: valores[i]})
         return chaves

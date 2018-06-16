@@ -40,7 +40,7 @@ class EulerExplicito(object):
         t = self.tmin
 
         for edo in funcoes:
-            self.resultados.append([edo.getPVI()])
+            self.resultados.append([edo.getValorInicial()])
 
         while t <= tmax:
             for i, func in enumerate(funcoes):
