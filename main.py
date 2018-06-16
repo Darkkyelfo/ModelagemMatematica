@@ -12,7 +12,7 @@ metodoNewton = Newton()
 
 #Questão 2
 
-# funcao2 = FuncaoModelo("e**(-x)-2*y",pvis={"y":3,"x":0})
-#
-# metodoEulerExp.solucionar([funcao2],0.001,0,3)
+funcao2 = FuncaoModelo("e**(-x)-2*y",["x","y"])
+
+metodoEulerExp.solucionar([funcao2],[0,3],0,0.001,3)
 
