@@ -22,8 +22,9 @@ resultadoExato = []
 for x in metodoEulerExp.eixoX():
     resultadoExato.append(funcaoExata.getValorFuncao([x]))
 plt.plot(metodoEulerExp.eixoX(), resultadoExato,color='red',label='Analitico')
-plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0],"o", markersize=1, color='blue', label="Euler")
-plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], "-", markersize=1, color='green', label="RungeKutta")
+plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
+plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+plt.legend(loc='upper right', frameon=False)
 plt.show()
 
 # Questão 3
@@ -33,6 +34,11 @@ funcao2 = FuncaoModelo("4.5*y - 0.9*x*y", ["x", 'y'])
 funcoes = [funcao1, funcao2]
 metodoEulerExp.solucionar(funcoes, [4, 4, 0], 0.001, 16)
 rungeKutta.solucionar(funcoes, [4, 4, 0], 0.001, 16)
-plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0],"o", markersize=1, color='blue', label="Euler")
-plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], "-", markersize=1, color='green', label="RungeKutta")
+plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
+plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+plt.legend(loc='upper left', frameon=False)
+plt.show()
+plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[1], color='blue', label="Euler")
+plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='green', label="RungeKutta")
+plt.legend(loc='upper right', frameon=False)
 plt.show()

@@ -40,6 +40,7 @@ class Newton(object):
 
 class RungeKutta(object):
 
+    @jit
     def solucionar(self, funcoes, pvi, h, tmax):
         self.h = h
         self.resultados = []
@@ -50,7 +51,7 @@ class RungeKutta(object):
             self.resultados.append([valor])
         for i in funcoes:
             self.ks.append([0] * 4)
-        self.ks = np.array(self.ks,np.float32)
+        self.ks = np.array(self.ks, np.float32)
         cont = 1
         while t <= tmax:
             self.__acharInclinacoes(funcoes)
@@ -61,26 +62,28 @@ class RungeKutta(object):
             cont += 1
             self.resultados[-1].append(t)
 
-    # @jit
+    @jit
     def __getKmeio(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
         tamanho = len(valores) - 1
         valores[tamanho] = valores[tamanho] + self.h / 2
-        for i, k in enumerate(np.array(self.ks, np.float32)[:, coluna - 1]):
+        ks = np.array(self.ks, np.float32)[:, coluna - 1]
+        for i, k in enumerate(ks):
             valores[i] = valores[i] + (self.h / 2) * k
 
         return funcao.getValorFuncao(valores)
 
-    # @jit
+    @jit
     def __getKFinal(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
         tamanho = len(valores) - 1
         valores[tamanho] = valores[tamanho] + self.h / 2
-        for i, k in enumerate(np.array(self.ks, np.float32)[:, coluna - 1]):
+        ks = np.array(self.ks, np.float32)[:, coluna - 1]
+        for i, k in enumerate(ks):
             valores[i] = valores[i] + self.h * k
         return funcao.getValorFuncao(valores)
 
-    # @jit
+    @jit
     def __acharInclinacoes(self, funcoes):
         resultados = np.array(self.resultados, np.float32)[:, -1]
         for coluna in range(self.ks.shape[1]):
