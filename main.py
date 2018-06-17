@@ -1,5 +1,5 @@
 from funcoes import FuncaoModelo
-from metodos_numericos import EulerExplicito, Newton,RungeKutta
+from metodos_numericos import EulerExplicito, Newton, RungeKutta
 import matplotlib.pyplot as plt
 
 metodoEulerExp = EulerExplicito()
@@ -17,11 +17,13 @@ rungeKutta = RungeKutta()
 funcao2 = FuncaoModelo("e**(-x)-2*y", ["y", 'x'])
 funcaoExata = FuncaoModelo("e**(-x)+2*e**(-2*x)", ["x"])
 metodoEulerExp.solucionar([funcao2], [3, 0], 0.001, 3)
+rungeKutta.solucionar([funcao2], [3, 0], 0.001, 3)
 resultadoExato = []
 for x in metodoEulerExp.eixoX():
     resultadoExato.append(funcaoExata.getValorFuncao([x]))
-plt.plot(metodoEulerExp.eixoX(), resultadoExato)
-plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], "o", markersize=0.2)
+plt.plot(metodoEulerExp.eixoX(), resultadoExato,color='red',label='Analitico')
+plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0],"o", markersize=1, color='blue', label="Euler")
+plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], "-", markersize=1, color='green', label="RungeKutta")
 plt.show()
 
 # Questão 3
@@ -30,7 +32,7 @@ funcao1 = FuncaoModelo("-0.16*x+0.08*x*y", ["x", 'y'])
 funcao2 = FuncaoModelo("4.5*y - 0.9*x*y", ["x", 'y'])
 funcoes = [funcao1, funcao2]
 metodoEulerExp.solucionar(funcoes, [4, 4, 0], 0.001, 16)
-rungeKutta.solucionar(funcoes,[4, 4, 0], 0.001, 16)
-plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], "o", markersize=0.2)
-plt.plot(rungeKutta.eixoX(), metodoEulerExp.resultados[0], "-", markersize=0.2)
+rungeKutta.solucionar(funcoes, [4, 4, 0], 0.001, 16)
+plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0],"o", markersize=1, color='blue', label="Euler")
+plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], "-", markersize=1, color='green', label="RungeKutta")
 plt.show()

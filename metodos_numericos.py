@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+from numba import jit
 
 
 class EulerExplicito(object):
@@ -12,11 +13,11 @@ class EulerExplicito(object):
         for valor in pvi:
             self.resultados.append([valor])
         while t <= tmax:
-            resultados = np.array(self.resultados)[:, -1]
+            resultados = np.array(self.resultados, np.float32)[:, -1]
             for i, func in enumerate(funcoes):
                 r = self.resultados[i]
                 r.append(r[-1] + self.h * func.getValorFuncao(resultados))
-                t = self.h + t
+            t = self.h + t
             self.resultados[-1].append(t)
 
     def eixoX(self):
@@ -49,31 +50,39 @@ class RungeKutta(object):
             self.resultados.append([valor])
         for i in funcoes:
             self.ks.append([0] * 4)
-        self.ks = np.array(self.ks)
+        self.ks = np.array(self.ks,np.float32)
+        cont = 1
         while t <= tmax:
             self.__acharInclinacoes(funcoes)
             for i in range(tamanho):
                 r = self.resultados[i]
-                r.append(t + self.h / 6 * np.sum(self.ks[i]))
-                t = self.h + t
+                r.append(r[-1] + (self.h / 6) * np.sum(self.ks[i] * [1, 2, 2, 1]))
+            t = pvi[-1] + self.h * cont
+            cont += 1
             self.resultados[-1].append(t)
 
-    def __getKmeio(self, funcao, valores, coluna):
+    # @jit
+    def __getKmeio(self, funcao, resultados, coluna):
+        valores = np.copy(resultados)
         tamanho = len(valores) - 1
         valores[tamanho] = valores[tamanho] + self.h / 2
-        for i, k in enumerate(np.array(self.ks)[:, coluna - 1]):
-            valores[i] = valores[i] * self.h / 2 * k
+        for i, k in enumerate(np.array(self.ks, np.float32)[:, coluna - 1]):
+            valores[i] = valores[i] + (self.h / 2) * k
+
         return funcao.getValorFuncao(valores)
 
-    def __getKFinal(self, funcao, valores, coluna):
+    # @jit
+    def __getKFinal(self, funcao, resultados, coluna):
+        valores = np.copy(resultados)
         tamanho = len(valores) - 1
         valores[tamanho] = valores[tamanho] + self.h / 2
-        for i, k in enumerate(np.array(self.ks)[:, coluna - 1]):
-            valores[i] = valores[i] * self.h * k
+        for i, k in enumerate(np.array(self.ks, np.float32)[:, coluna - 1]):
+            valores[i] = valores[i] + self.h * k
         return funcao.getValorFuncao(valores)
 
+    # @jit
     def __acharInclinacoes(self, funcoes):
-        resultados = np.array(self.resultados)[:, -1]
+        resultados = np.array(self.resultados, np.float32)[:, -1]
         for coluna in range(self.ks.shape[1]):
             for linha in range(self.ks.shape[0]):
                 if (coluna == 0):  # incio
