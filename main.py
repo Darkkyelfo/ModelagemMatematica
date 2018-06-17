@@ -7,10 +7,10 @@ metodoNewton = Newton()
 rungeKutta = RungeKutta()
 
 # Questão 1
-# funcao1 = FuncaoModelo("e**x - 2", ["x"], derivada="e**x")
-#
-# x, iteracoes = metodoNewton.zeroFx(0, funcao1, 0.01)
-# print("valor de x para f(x) = 0 é aproximademente: %s.\nQuantidade de iteracoes:%s" % (x, iteracoes))
+funcao1 = FuncaoModelo("e**x - 2", ["x"], derivada="e**x")
+
+x, iteracoes = metodoNewton.zeroFx(0, funcao1, 0.01)
+print("valor de x para f(x) = 0 é aproximademente: %s.\nQuantidade de iteracoes:%s" % (x, iteracoes))
 
 # Questão 2
 
@@ -36,7 +36,7 @@ metodoEulerExp.solucionar(funcoes, [4, 4, 0], 0.001, 16)
 rungeKutta.solucionar(funcoes, [4, 4, 0], 0.001, 16)
 plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
 plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
-plt.legend(loc='upper left', frameon=False)
+plt.legend(loc='upper right', frameon=False)
 plt.show()
 plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[1], color='blue', label="Euler")
 plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='green', label="RungeKutta")
