@@ -9,7 +9,7 @@ rungeKutta = RungeKutta()
 # Questão 1
 funcao1 = FuncaoModelo("e**x - 2", ["x"], derivada="e**x")
 
-x, iteracoes = metodoNewton.zeroFx(0, funcao1, 0.01)
+x, iteracoes = metodoNewton.zeroFx(0.8, funcao1, 0.01)
 print("valor de x para f(x) = 0 é aproximademente: %s.\nQuantidade de iteracoes:%s" % (x, iteracoes))
 
 # Questão 2
