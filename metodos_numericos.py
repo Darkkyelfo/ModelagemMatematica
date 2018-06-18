@@ -1,7 +1,5 @@
 import sys
 import numpy as np
-from numba import jit
-
 
 class EulerExplicito(object):
 
@@ -40,7 +38,7 @@ class Newton(object):
 
 class RungeKutta(object):
 
-    @jit
+
     def solucionar(self, funcoes, pvi, h, tmax):
         self.h = h
         self.resultados = []
@@ -62,21 +60,20 @@ class RungeKutta(object):
             cont += 1
             self.resultados[-1].append(t)
 
-    @jit
+
     def __getKmeio(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
         ks = np.append((self.h / 2) * np.array(self.ks, np.float32)[:, coluna - 1], np.array([self.h / 2], np.float32))
         valores = valores + ks
         return funcao.getValorFuncao(valores)
 
-    @jit
+
     def __getKFinal(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
         ks = np.append(self.h * np.array(self.ks, np.float32)[:, coluna - 1], np.array(self.h, np.float32))
         valores = valores + ks
         return funcao.getValorFuncao(valores)
 
-    @jit
     def __acharInclinacoes(self, funcoes):
         resultados = np.array(self.resultados, np.float32)[:, -1]
         for coluna in range(self.ks.shape[1]):
