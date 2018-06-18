@@ -65,22 +65,15 @@ class RungeKutta(object):
     @jit
     def __getKmeio(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
-        tamanho = len(valores) - 1
-        valores[tamanho] = valores[tamanho] + self.h / 2
-        ks = np.array(self.ks, np.float32)[:, coluna - 1]
-        for i, k in enumerate(ks):
-            valores[i] = valores[i] + (self.h / 2) * k
-
+        ks = np.append((self.h / 2) * np.array(self.ks, np.float32)[:, coluna - 1], np.array([self.h / 2], np.float32))
+        valores = valores + ks
         return funcao.getValorFuncao(valores)
 
     @jit
     def __getKFinal(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
-        tamanho = len(valores) - 1
-        valores[tamanho] = valores[tamanho] + self.h / 2
-        ks = np.array(self.ks, np.float32)[:, coluna - 1]
-        for i, k in enumerate(ks):
-            valores[i] = valores[i] + self.h * k
+        ks = np.append(self.h * np.array(self.ks, np.float32)[:, coluna - 1], np.array(self.h, np.float32))
+        valores = valores + ks
         return funcao.getValorFuncao(valores)
 
     @jit
