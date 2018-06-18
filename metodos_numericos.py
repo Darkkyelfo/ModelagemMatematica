@@ -38,7 +38,6 @@ class Newton(object):
 
 class RungeKutta(object):
 
-
     def solucionar(self, funcoes, pvi, h, tmax):
         self.h = h
         self.resultados = []
