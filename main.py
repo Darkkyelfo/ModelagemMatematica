@@ -47,7 +47,7 @@ class FuncaB4(FuncaoBasica):
         return 0
 
 
-class PenduloVelocidade(FuncaoBasica):
+class massaMolaVelocidade(FuncaoBasica):
     def getValorFuncao(self, valores):
         return valores[1]
 
@@ -55,15 +55,25 @@ class PenduloVelocidade(FuncaoBasica):
         return 0
 
 
-class PenduloAceleracao(FuncaoBasica):
+class massaMolaAceleracao(FuncaoBasica):
     def getValorFuncao(self, valores):
         k = 5000
         m = 2
         L = 3
-        return -k/m*(valores[0]-L)
+        return -k / m * (valores[0] - L)
 
     def getValorDerivada(self, valores):
         return 0
+
+
+class MassaMolaAtritoAceleracao(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        k = 5000
+        m = 2
+        L = 3
+        u = 0.8
+        N = 10
+        return (-k * (valores[0] - L) - u * N*valores[1]) / m
 
 
 if __name__ == '__main__':
@@ -102,18 +112,25 @@ if __name__ == '__main__':
     metodoEulerExp.solucionar(funcoes, [4, 4, 0], 0.001, 16)
     rungeKutta.solucionar(funcoes, [4, 4, 0], 0.001, 16)
     plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
-    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='red', label="RungeKutta")
     plt.legend(loc='upper right', frameon=False)
-    plt.show()
     plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[1], color='blue', label="Euler")
-    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='green', label="RungeKutta")
+    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='red', label="RungeKutta")
     plt.legend(loc='upper right', frameon=False)
     plt.show()
 
-    # Pendulo
-    pendulo1 = PenduloVelocidade()
-    pendulo2 = PenduloAceleracao()
-    funcoes = [pendulo1, pendulo2]
+    # massa mola
+    massaMola1 = massaMolaVelocidade()
+    massaMola2 = massaMolaAceleracao()
+    funcoes = [massaMola1, massaMola2]
+    rungeKutta.solucionar(funcoes, [0, 5, 0], 0.001, 0.5)
+    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+    plt.show()
+
+    # massa mola com atrito
+    massaMola1 = massaMolaVelocidade()
+    massaMola2 = MassaMolaAtritoAceleracao()
+    funcoes = [massaMola1, massaMola2]
     rungeKutta.solucionar(funcoes, [0, 5, 0], 0.001, 0.5)
     plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
     plt.show()
