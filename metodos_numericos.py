@@ -62,13 +62,13 @@ class RungeKutta(object):
 
     def __getKmeio(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
-        ks = np.append((self.h / 2) * self.ks[:, coluna - 1], np.array([self.h / 2], np.float32))
+        ks = np.append((self.h / 2) * self.ks[:, coluna - 1], [self.h / 2])
         valores = valores + ks
         return funcao.getValorFuncao(valores)
 
     def __getKFinal(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
-        ks = np.append(self.h * self.ks[:, coluna - 1], np.array(self.h, np.float32))
+        ks = np.append(self.h * self.ks[:, coluna - 1], [self.h])
         valores = valores + ks
         return funcao.getValorFuncao(valores)
 

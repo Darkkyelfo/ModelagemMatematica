@@ -47,6 +47,25 @@ class FuncaB4(FuncaoBasica):
         return 0
 
 
+class PenduloVelocidade(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        return valores[1]
+
+    def getValorDerivada(self, valores):
+        return 0
+
+
+class PenduloAceleracao(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        k = 5000
+        m = 2
+        L = 3
+        return -k/m*(valores[0]-L)
+
+    def getValorDerivada(self, valores):
+        return 0
+
+
 if __name__ == '__main__':
     # Questão 1
     funcao1 = FuncaoB1()
@@ -54,7 +73,7 @@ if __name__ == '__main__':
     x, iteracoes = metodoNewton.zeroFx(0.8, funcao1, 0.01)
     print("valor de x para f(x) = 0 é aproximademente: %s.\nQuantidade de iteracoes:%s" % (x, iteracoes))
 
-    # Questão 2
+    # # Questão 2
 
     funcao2 = FuncaoB2()
     funcaoExata = FuncaoB2Exata()
@@ -75,7 +94,7 @@ if __name__ == '__main__':
     plt.legend(loc='upper right', frameon=False)
     plt.show()
 
-    # Questão 3
+    # # Questão 3
     #
     funcao1 = FuncaoB3()
     funcao2 = FuncaB4()
@@ -89,5 +108,13 @@ if __name__ == '__main__':
     plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[1], color='blue', label="Euler")
     plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='green', label="RungeKutta")
     plt.legend(loc='upper right', frameon=False)
+    plt.show()
+
+    # Pendulo
+    pendulo1 = PenduloVelocidade()
+    pendulo2 = PenduloAceleracao()
+    funcoes = [pendulo1, pendulo2]
+    rungeKutta.solucionar(funcoes, [0, 5, 0], 0.001, 0.5)
+    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
     plt.show()
     print("final")
