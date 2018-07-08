@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+import time
 
 
 class EulerExplicito(object):
@@ -12,7 +13,7 @@ class EulerExplicito(object):
         for valor in pvi:
             self.resultados.append([valor])
         while t <= tmax:
-            resultados = np.array(self.resultados, np.float32)[:, -1]
+            resultados = [row[-1] for row in self.resultados]
             for i, func in enumerate(funcoes):
                 r = self.resultados[i]
                 r.append(r[-1] + self.h * func.getValorFuncao(resultados))
@@ -73,9 +74,11 @@ class RungeKutta(object):
         return funcao.getValorFuncao(valores)
 
     def __acharInclinacoes(self, funcoes):
-        resultados = np.array(self.resultados, np.float32)[:, -1]
-        for coluna in range(self.ks.shape[1]):
-            for linha in range(self.ks.shape[0]):
+        resultados = [row[-1] for row in self.resultados]
+        col = self.ks.shape[1]
+        row = self.ks.shape[0]
+        for coluna in range(col):
+            for linha in range(row):
                 if (coluna == 0):  # incio
                     self.ks[linha][coluna] = funcoes[linha].getValorFuncao(resultados)
                 elif (coluna == 3):  # o fim

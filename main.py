@@ -56,27 +56,27 @@ if __name__ == '__main__':
 
     # Questão 2
 
-    funcao2 = FuncaoB2()
-    funcaoExata = FuncaoB2Exata()
-    metodoEulerExp.solucionar([funcao2], [3, 0], 0.001, 3)
-    rungeKutta.solucionar([funcao2], [3, 0], 0.001, 3)
-    resultadoExato = []
-    resultadoExatoR = []
-
-    for x in metodoEulerExp.eixoX():
-        resultadoExato.append(funcaoExata.getValorFuncao([x]))
-    for x in rungeKutta.eixoX():
-        resultadoExatoR.append(funcaoExata.getValorFuncao([x]))
-
-    plt.plot(metodoEulerExp.eixoX(), resultadoExato, color='red', label='Analítico-Euler')
-    plt.plot(rungeKutta.eixoX(), resultadoExatoR, color='yellow', label='Analítico-Kutta')
-    plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
-    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
-    plt.legend(loc='upper right', frameon=False)
-    plt.show()
+    # funcao2 = FuncaoB2()
+    # funcaoExata = FuncaoB2Exata()
+    # metodoEulerExp.solucionar([funcao2], [3, 0], 0.001, 3)
+    # rungeKutta.solucionar([funcao2], [3, 0], 0.001, 3)
+    # resultadoExato = []
+    # resultadoExatoR = []
+    #
+    # for x in metodoEulerExp.eixoX():
+    #     resultadoExato.append(funcaoExata.getValorFuncao([x]))
+    # for x in rungeKutta.eixoX():
+    #     resultadoExatoR.append(funcaoExata.getValorFuncao([x]))
+    #
+    # plt.plot(metodoEulerExp.eixoX(), resultadoExato, color='red', label='Analítico-Euler')
+    # plt.plot(rungeKutta.eixoX(), resultadoExatoR, color='yellow', label='Analítico-Kutta')
+    # plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
+    # plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+    # plt.legend(loc='upper right', frameon=False)
+    # plt.show()
 
     # Questão 3
-
+    #
     funcao1 = FuncaoB3()
     funcao2 = FuncaB4()
     funcoes = [funcao1, funcao2]
@@ -90,3 +90,4 @@ if __name__ == '__main__':
     plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='green', label="RungeKutta")
     plt.legend(loc='upper right', frameon=False)
     plt.show()
+    print("final")
