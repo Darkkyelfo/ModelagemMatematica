@@ -1,22 +1,63 @@
-from funcoes import FuncaoModelo
-from metodos_numericos import EulerExplicito, Newton, RungeKutta
+from funcoes import FuncaoBasica
+from metodos_numericos import EulerExplicito, Newton, RungeKutta, np
 import matplotlib.pyplot as plt
 
 metodoEulerExp = EulerExplicito()
 metodoNewton = Newton()
 rungeKutta = RungeKutta()
 
+
+class FuncaoB1(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        return np.power(np.e, valores[0]) - 2
+
+    def getValorDerivada(self, valores):
+        return np.power(np.e, valores[0])
+
+
+class FuncaoB2(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        return np.e ** (-valores[1]) - 2 * valores[0]
+
+    def getValorDerivada(self, valores):
+        return 0
+
+
+class FuncaoB2Exata(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        return np.e ** (-valores[0]) + 2 * np.e ** (-2 * valores[0])
+
+    def getValorDerivada(self, valores):
+        return 0
+
+
+class FuncaoB3(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        return -0.16 * valores[0] + 0.08 * valores[0] * valores[1]
+
+    def getValorDerivada(self, valores):
+        return 0
+
+
+class FuncaB4(FuncaoBasica):
+    def getValorFuncao(self, valores):
+        return 4.5 * valores[1] - 0.9 * valores[0] * valores[1]
+
+    def getValorDerivada(self, valores):
+        return 0
+
+
 if __name__ == '__main__':
     # Questão 1
-    funcao1 = FuncaoModelo("e**x - 2", ["x"], derivada="e**x")
+    funcao1 = FuncaoB1()
 
     x, iteracoes = metodoNewton.zeroFx(0.8, funcao1, 0.01)
     print("valor de x para f(x) = 0 é aproximademente: %s.\nQuantidade de iteracoes:%s" % (x, iteracoes))
 
     # Questão 2
 
-    funcao2 = FuncaoModelo("e**(-x)-2*y", ["y", 'x'])
-    funcaoExata = FuncaoModelo("e**(-x)+2*e**(-2*x)", ["x"])
+    funcao2 = FuncaoB2()
+    funcaoExata = FuncaoB2Exata()
     metodoEulerExp.solucionar([funcao2], [3, 0], 0.001, 3)
     rungeKutta.solucionar([funcao2], [3, 0], 0.001, 3)
     resultadoExato = []
@@ -36,8 +77,8 @@ if __name__ == '__main__':
 
     # Questão 3
 
-    funcao1 = FuncaoModelo("-0.16*x+0.08*x*y", ["x", 'y'])
-    funcao2 = FuncaoModelo("4.5*y - 0.9*x*y", ["x", 'y'])
+    funcao1 = FuncaoB3()
+    funcao2 = FuncaB4()
     funcoes = [funcao1, funcao2]
     metodoEulerExp.solucionar(funcoes, [4, 4, 0], 0.001, 16)
     rungeKutta.solucionar(funcoes, [4, 4, 0], 0.001, 16)

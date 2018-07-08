@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 
+
 class EulerExplicito(object):
 
     def solucionar(self, funcoes, pvi, h, tmax):
@@ -59,13 +60,11 @@ class RungeKutta(object):
             cont += 1
             self.resultados[-1].append(t)
 
-
     def __getKmeio(self, funcao, resultados, coluna):
         valores = np.copy(resultados)
         ks = np.append((self.h / 2) * np.array(self.ks, np.float32)[:, coluna - 1], np.array([self.h / 2], np.float32))
         valores = valores + ks
         return funcao.getValorFuncao(valores)
-
 
     def __getKFinal(self, funcao, resultados, coluna):
         valores = np.copy(resultados)

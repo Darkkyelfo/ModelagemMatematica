@@ -7,6 +7,7 @@ def create_dict(keys, values):
     d["e"] = e
     return d
 
+
 def setChaves(variaveis, valores):
     chaves = {"e": e}  # numero de Euler
     for i, key in enumerate(variaveis):
@@ -26,3 +27,12 @@ class FuncaoModelo(object):
 
     def getValorDerivada(self, valores):
         return eval(self.derivada, create_dict(self.variaveis, valores))
+
+
+class FuncaoBasica(object):
+
+    def getValorFuncao(self, valores):
+        raise NotImplementedError("erro:implemente a funcao dx antes de usa-la.")
+
+    def getValorDerivada(self, valores):
+        raise NotImplementedError("erro:implemente a funcao dx antes de usa-la.")
