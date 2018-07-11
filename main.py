@@ -97,6 +97,7 @@ if __name__ == '__main__':
     for x in rungeKutta.eixoX():
         resultadoExatoR.append(funcaoExata.getValorFuncao([x]))
 
+    plt.figure(0)
     plt.plot(metodoEulerExp.eixoX(), resultadoExato, color='red', label='Analítico-Euler')
     plt.plot(rungeKutta.eixoX(), resultadoExatoR, color='yellow', label='Analítico-Kutta')
     plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
@@ -111,6 +112,7 @@ if __name__ == '__main__':
     funcoes = [funcao1, funcao2]
     metodoEulerExp.solucionar(funcoes, [4, 4, 0], 0.001, 16)
     rungeKutta.solucionar(funcoes, [4, 4, 0], 0.001, 16)
+    plt.figure(1)
     plt.plot(metodoEulerExp.eixoX(), metodoEulerExp.resultados[0], color='blue', label="Euler")
     plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='red', label="RungeKutta")
     plt.legend(loc='upper right', frameon=False)
@@ -123,15 +125,23 @@ if __name__ == '__main__':
     massaMola1 = massaMolaVelocidade()
     massaMola2 = massaMolaAceleracao()
     funcoes = [massaMola1, massaMola2]
-    rungeKutta.solucionar(funcoes, [0, 5, 0], 0.001, 0.5)
+    rungeKutta.solucionar(funcoes, [5, 0, 0], 0.001, 0.5)
+    plt.figure(2)
     plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+    plt.show()
+    plt.figure(3)
+    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='red', label="RungeKutta")
     plt.show()
 
     # massa mola com atrito
     massaMola1 = massaMolaVelocidade()
     massaMola2 = MassaMolaAtritoAceleracao()
     funcoes = [massaMola1, massaMola2]
-    rungeKutta.solucionar(funcoes, [0, 5, 0], 0.001, 0.5)
+    rungeKutta.solucionar(funcoes, [5, 0, 0], 0.001, 0.5)
+    plt.figure(4)
     plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[0], color='green', label="RungeKutta")
+    plt.show()
+    plt.figure(5)
+    plt.plot(rungeKutta.eixoX(), rungeKutta.resultados[1], color='red', label="RungeKutta")
     plt.show()
     print("final")
